@@ -1,2 +1,2 @@
-# INDE577-F25
-Repository for Fall 2025 INDE 577 Project
+# CMOR438-F25
+Repository for Fall 2025 CMOR 438 Project
