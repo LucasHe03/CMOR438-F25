@@ -3,32 +3,36 @@ import pytest
 import rice2025.preprocess as prep
 
 """
-Testing normalize function.
+Create NumPy arrays to be used in all tests
 """
-def test_normalize_empty():
-    data = np.array([])
-    normalized = prep.normalize(data)
-    exp = np.array([])
-    np.testing.assert_equal(normalized, exp)
-
-def test_normalize_1d():
-    data = np.array([0, 5, 10])
-    normalized = prep.normalize(data)
-    exp = np.array([0.0, 0.5, 1.0])
-    np.testing.assert_allclose(normalized, exp, 1e-8)
-
-def test_normalize_2d():
-    data = np.array([[0, 2, 3],
+empty = np.array([])
+one_d = np.array([0, 5, 10])
+two_d = np.array([[0, 2, 3],
                      [5, 4, 3],
                      [10, 10, 9]])
-    normalized = prep.normalize(data)
+negative = np.array([-5, 0, 5])
+
+"""
+Testing scale function.
+"""
+def test_scale_empty():
+    scaled = prep.scale(empty)
+    exp = np.array([])
+    np.testing.assert_equal(scaled, exp)
+
+def test_scale_1d():
+    scaled = prep.scale(one_d)
+    exp = np.array([0.0, 0.5, 1.0])
+    np.testing.assert_allclose(scaled, exp, 1e-8)
+
+def test_scale_2d():
+    scaled = prep.scale(two_d)
     exp = np.array([[0.0, 0.0, 0.0], 
                     [0.5, 0.25, 0.0], 
                     [1.0, 1.0, 1.0]])
-    np.testing.assert_equal(normalized, exp)
+    np.testing.assert_equal(scaled, exp)
 
-def test_normalize_negative():
-    data = np.array([-5, 0, 5])
-    normalized = prep.normalize(data)
+def test_scale_negative():
+    scaled = prep.scale(negative)
     exp = np.array([0.0, 0.5, 1.0])
-    np.testing.assert_equal(normalized, exp)
+    np.testing.assert_equal(scaled, exp)
