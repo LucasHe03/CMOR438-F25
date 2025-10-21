@@ -29,7 +29,6 @@ def scale(data):
                 scaled[:, i] = (data[:, i] - min) / (max - min)
         return scaled
 
-
 """
 Normalizes the input data using z-score standardization. 
 Inputs:
@@ -56,6 +55,33 @@ def normalize(data):
                 std = 1
             normalized[:, i] = (data[:, i] - mean) / std
         return normalized
+
+"""
+Splits the input data into training and testing sets. 
+Inputs:
+    - data: a NumPy array of any shape
+    - test_size: the proportion of the data to be used for testing (default = .25)
+"""
+def train_test_split(data, test_size = .25):
+    # convert to np array
+    data = np.array(data, np.float64)
+    # check for empty data
+    if data.size == 0:
+        return np.array([]), np.array([])
+    # check test_size
+    if test_size < 0 or test_size > 1:
+        raise ValueError("test_size must be between 0 and 1")
     
-def train_test_split():
-    return
+    # obtain random indicies
+    n = data.shape[0]
+    indices = np.arange(n)
+    np.random.shuffle(indices)
+
+    # find split 
+    split = n - max(1, int(round(n * test_size)))
+    train_idx, test_idx = indices[:split], indices[split:]
+
+    train = data[train_idx]
+    test = data[test_idx]
+
+    return train, test

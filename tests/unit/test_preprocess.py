@@ -3,7 +3,7 @@ import pytest
 import rice2025.preprocess as prep
 
 """
-Create NumPy arrays to be used in all tests
+Create NumPy arrays to be used across tests
 """
 empty = np.array([])
 one_d = np.array([0, 5, 10])
@@ -72,3 +72,51 @@ def test_normalize_rep():
     normalized = prep.normalize(rep)
     exp = np.array([0.0, 0.0, 0.0])
     np.testing.assert_allclose(normalized, exp, 1e-8)
+
+"""
+Test train_test_split function.
+"""
+def test_train_test_split_empty():
+    train, test = prep.train_test_split(empty)
+    assert train.size == 0 and test.size == 0
+
+def test_train_test_split_1d():
+    data = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+    train, test = prep.train_test_split(data)
+    assert train.size == 8 and test.size == 2
+    split_helper(test, train)
+
+def test_train_test_split_1d2():
+    data = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11])
+    train, test = prep.train_test_split(data)
+    assert train.size == 9 and test.size == 3
+    split_helper(test, train)
+
+def test_train_test_split_2d():
+    data = np.array([[0, 1, 2, 3],
+                     [4, 5, 6, 7], 
+                     [8, 9, 10, 11]])
+    train, test = prep.train_test_split(data)
+    assert train.size == 8 and test.size == 4
+    split_helper(test, train)
+    split_2d_helper(data, train, test)
+
+def test_train_test_split_2d2():
+    data = np.array([[0, 1], [2, 3],
+                    [4, 5], [6, 7], 
+                    [8, 9], [10, 11],
+                    [12, 13], [14, 15]])
+    train, test = prep.train_test_split(data)
+    assert train.size == 12 and test.size == 4
+    split_helper(test, train)
+    split_2d_helper(data, train, test)
+
+def split_helper(test, train):
+    assert len(np.unique(train)) == train.size
+    assert len(np.unique(test)) == test.size
+    assert len(np.intersect1d(train, test)) == 0
+
+def split_2d_helper(original, train, test):
+    assert train.shape[1] == original.shape[1]
+    assert test.shape[1] == original.shape[1]
+    assert train.shape[0] + test.shape[0] == original.shape[0]
