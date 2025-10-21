@@ -1,21 +1,20 @@
 [build-system]
-requires = ["setuptools>=69", "wheel"]
+requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "rice_ml"
+name = "rice2025"
 version = "0.1.0"
-description = "An example Python project using pyproject.toml"
+description = "A KNN package."
 authors = [{ name = "Lucas He", email = "lucas.he.2003@gmail.com" }]
 readme = "README.md"
-license = { text = "MIT" }
+license = { file = "LICENSE" }
 requires-python = ">=3.9"
-dependencies = ["numpy", "matplotlib", "seaborn", "pandas", "requests"]
+dependencies = []
 
 [project.optional-dependencies]
 dev = ["pytest"]
 
-# >>> These two lines make the src/ layout unambiguous <<<
 [tool.setuptools]
 package-dir = { "" = "src" }
 
