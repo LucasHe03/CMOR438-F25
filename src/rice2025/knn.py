@@ -1,6 +1,6 @@
 import numpy as np
-import metrics 
-import postprocess as postp
+from . import metrics 
+from . import postprocess as postp
 
 """
 Implements the KNN algorithm.
@@ -17,7 +17,7 @@ class KNN:
         self.y_train = None
 
         # check for invalid k
-        if k < 0:
+        if k <= 0:
             raise ValueError("k must be a positive integer")
     
     """
