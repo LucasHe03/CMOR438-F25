@@ -1,5 +1,6 @@
 import numpy as np
 import metrics 
+import postprocess as postp
 
 """
 Implements the KNN algorithm.
@@ -43,4 +44,24 @@ class KNN:
         - x: the test data
     """
     def predict(self, x):
-        return
+        # ensure model has been fitted
+        if self.x_train is None or self.y_train is None:
+            raise ValueError("model most be fit before predicting")
+
+        # format input data
+        x = np.array(x, np.float64)
+        if x.ndim == 1:
+            x = x.reshape(1, -1)
+        
+        # predict labels
+        predictions = []
+        for dp in x:
+            distances = [metrics.euclidean_distance(dp, x) for x in self.x_train]
+            indices = np.argsort(distances)[:self.k]
+            candidates = self.y_train[indices]
+            # check for type of label
+            if np.issubdtype(self.y_train.dtype, np.number):
+                predictions.append(postp.average_label(candidates))
+            else:
+                predictions.append(postp.majority_label(candidates))
+        return np.array(predictions)
