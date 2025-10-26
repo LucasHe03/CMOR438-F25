@@ -1,6 +1,6 @@
 import numpy as np
 import pytest
-import rice2025.knn as knn
+import rice2025.supervised_learning.knn as knn
 
 """
 Test __init__ function

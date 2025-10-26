@@ -1,6 +1,6 @@
 import numpy as np
 import pytest
-import rice2025.preprocess as prep
+import rice2025.supervised_learning.preprocess as prep
 
 """
 Create NumPy arrays to be used across tests

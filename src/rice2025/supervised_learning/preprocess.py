@@ -1,5 +1,7 @@
 import numpy as np
 
+__all__ = ['scale', 'normalize', 'train_test_split']
+
 """
 Scales the input data to be between 0 and 1. 
 Inputs:

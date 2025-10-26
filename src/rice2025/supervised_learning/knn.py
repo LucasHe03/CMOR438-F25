@@ -2,6 +2,7 @@ import numpy as np
 from . import metrics 
 from . import postprocess as postp
 
+__all__ = ['KNN']
 """
 Implements the KNN algorithm.
 """

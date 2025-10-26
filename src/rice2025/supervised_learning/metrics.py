@@ -1,5 +1,7 @@
 import numpy as np
 
+__all__ = ['euclidean_distance', 'manhattan_distance']
+
 """
 Computes the Euclidean between two NumPy arrays.
 Inputs:

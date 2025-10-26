@@ -1,5 +1,7 @@
 import numpy as np
 
+__all__ = ['majority_label', 'average_label']
+
 """
 Returns the majority label from a list of labels.
 Inputs:

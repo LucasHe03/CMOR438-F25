@@ -1,6 +1,6 @@
 import numpy as np
 import pytest
-import rice2025.postprocess as postp
+import rice2025.supervised_learning.postprocess as postp
 
 """
 Create NumPy arrays to be used across tests
