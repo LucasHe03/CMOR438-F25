@@ -1,6 +1,6 @@
 import numpy as np
 import pytest
-import rice2025.supervised_learning.metrics as met
+import rice2025.utilities.metrics as met
 
 """
 Create NumPy arrays to be used across tests

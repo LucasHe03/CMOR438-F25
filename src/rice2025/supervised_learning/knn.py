@@ -1,6 +1,6 @@
 import numpy as np
-from . import metrics 
-from . import postprocess as postp
+from ..utilities import metrics 
+from ..utilities import postprocess as postp
 
 __all__ = ['KNN']
 """
