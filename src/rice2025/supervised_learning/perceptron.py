@@ -28,6 +28,9 @@ class Perceptron:
         x = np.array(x, dtype=np.float64)
         y = np.array(y, dtype=np.int_)
 
+        if x.ndim == 1:
+            x = x.reshape(-1, 1)
+
         # check for errors
         if len(x) != len(y):
             raise ValueError("x and y must have equal lengths")
@@ -47,9 +50,9 @@ class Perceptron:
                 y_predicted = np.where(linear_output >= 0.0, 1, -1)
                 
                 # Update
-                update = self.lr * (y[idx] - y_predicted)
-                self.weights += update * x_i
-                self.bias += update
+                if y_predicted != y[idx]:
+                    self.weights += self.lr * y[idx] * x_i
+                    self.bias += self.lr * y[idx]
         return self
 
     """
@@ -61,9 +64,13 @@ class Perceptron:
         # ensure model has been fitted
         if self.weights is None or self.bias is None:
             raise ValueError("model must be fit before predicting")
-
-        x = np.array(x, dtype=np.float64)
         
+        x = np.array(x, dtype=np.float64)
+        if x.ndim == 1 and self.weights.shape[0] == 1:
+            x = x.reshape(-1, 1)
+        elif x.ndim == 1:
+            x = x.reshape(1, -1)
+                
         # Calculate net input
         linear_output = np.dot(x, self.weights) + self.bias
         # Predict
