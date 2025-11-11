@@ -40,14 +40,17 @@ pip install -e .
 ├── README.md                           # Project documentation (this file)  
 ├── examples                            # Example useage of modules  
 │   └── supervised_learning  
+│   └── unsupervised_learning  
 ├── src                                 # Main library source  
 │   └── rice2025  
-│       ├── supervised_learning         # Supervised learning algorithms  
+│       ├── supervised_learning         # Supervised learning algorithms
+│       ├── unsupervised_learning       # Unsupervised learning algorithms
 │       └── utilities                   # Helper functions for pre/post-processing and metrics  
 └── tests                               # Automated testing suite  
     ├── integration                     # Integration tests across components  
     └── unit                            # Unit tests for each module  
         ├── supervised_learning  
+        ├── unsupervised_learning  
         └── utilities  
 ```
 
