@@ -13,7 +13,7 @@ def test_init_default():
     assert model.bias is None
 
 def test_init_custom():
-    model = p.Perceptron(lr=0.1, n_iter=100)
+    model = p.Perceptron(lr = 0.1, n_iter = 100)
     assert model.lr == 0.1
     assert model.n_iter == 100
 
@@ -51,7 +51,7 @@ def test_predict_not_fitted():
         model.predict([[1, 1]])
 
 def test_predict_simple_separable():
-    model = p.Perceptron(lr=0.1, n_iter=10)
+    model = p.Perceptron(lr = 0.1, n_iter = 10)
     x_train = [[2, 1], [3, 4], [-1, -2], [-3, -1]]
     y_train = [1, 1, -1, -1]
     model.fit(x_train, y_train)
@@ -61,7 +61,7 @@ def test_predict_simple_separable():
     np.testing.assert_array_equal(predictions, np.array([1, -1]))
 
 def test_predict_single_point():
-    model = p.Perceptron(lr=0.1, n_iter=10)
+    model = p.Perceptron(lr = 0.1, n_iter = 10)
     x_train = [[2, 1], [3, 4], [-1, -2], [-3, -1]]
     y_train = [1, 1, -1, -1]
     model.fit(x_train, y_train)
@@ -70,7 +70,7 @@ def test_predict_single_point():
     np.testing.assert_array_equal(prediction, np.array([1]))
 
 def test_predict_multiple_points():
-    model = p.Perceptron(lr=0.1, n_iter=10)
+    model = p.Perceptron(lr = 0.1, n_iter = 10)
     x_train = [[2, 1], [3, 4], [-1, -2], [-3, -1]]
     y_train = [1, 1, -1, -1]
     model.fit(x_train, y_train)
@@ -90,7 +90,7 @@ def test_predict_mismatched_features():
         model.predict(x_test_mismatched)
 
 def test_predict_1d_data():
-    model = p.Perceptron(lr=0.1, n_iter=100)
+    model = p.Perceptron(lr = 0.1, n_iter = 100)
     x_train = [[1], [2], [-1], [-2]]
     y_train = [1, 1, -1, -1]
     model.fit(x_train, y_train)
@@ -100,7 +100,7 @@ def test_predict_1d_data():
     np.testing.assert_array_equal(predictions, np.array([1, -1]))
 
 def test_predict_1d_full():
-    model = p.Perceptron(lr=0.1, n_iter=100)
+    model = p.Perceptron(lr = 0.1, n_iter = 100)
     x_train = [.1, .2, .3, -.1, -.2, -.3]
     y_train = [1, 1, 1, -1, -1, -1]
     model.fit(x_train, y_train)
