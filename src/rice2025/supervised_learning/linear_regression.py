@@ -38,7 +38,7 @@ class LinearRegression:
         x_b = np.c_[np.ones((n_samples, 1)), x]
 
         # compute weights
-        theta = np.linalg.inv(x_b.T.dot(x_b)).dot(x_b.T).dot(y)
+        theta = np.linalg.pinv(x_b.T.dot(x_b)).dot(x_b.T).dot(y)
 
         self.bias = theta[0]
         self.weights = theta[1:]
