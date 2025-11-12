@@ -107,6 +107,14 @@ class MultilayerPerceptron:
         if self.w1 is None or self.w2 is None:
             raise ValueError("model must be fit before predicting")
 
+        x = np.array(x, dtype=np.float64)
+        if x.size == 0:
+            return np.array([])
+        if x.ndim == 1 and self.w1.shape[0] == 1:
+            x = x.reshape(-1, 1)
+        elif x.ndim == 1:
+            x = x.reshape(1, -1)
+
         z1 = np.dot(x, self.w1) + self.b1
         a1 = self._relu(z1)
         z2 = np.dot(a1, self.w2) + self.b2
