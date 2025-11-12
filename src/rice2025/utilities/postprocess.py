@@ -13,13 +13,10 @@ def majority_label(labels):
     if labels.size == 0:
         return None
     # get counts of labels
-    label, count = np.unique(labels, True)
-    # return max count
-    max = np.argmax(count)
-    max_labels = label[count == max]
-    for label in labels:
-        if label in max_labels:
-            return label
+    label, count = np.unique(labels, return_counts=True)
+    # return label with highest count
+    idx = int(np.argmax(count))
+    return label[idx]
 
 """
 Returns the average of a list of labels.
