@@ -54,6 +54,8 @@ class LinearRegression:
             raise ValueError("model must be fit before predicting")
         
         x = np.array(x, dtype = np.float64)
+        if x.size == 0:
+            return np.array([])
         if x.ndim == 1 and self.weights.shape[0] == 1:
             x = x.reshape(-1, 1)
         elif x.ndim == 1:

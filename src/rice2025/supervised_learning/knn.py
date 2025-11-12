@@ -51,6 +51,8 @@ class KNN:
 
         # format input data
         x = np.array(x, np.float64)
+        if x.size == 0:
+            return np.array([])
         if x.ndim == 1:
             x = x.reshape(1, -1)
         

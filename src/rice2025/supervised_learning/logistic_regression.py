@@ -72,6 +72,8 @@ class LogisticRegression:
             raise ValueError("model must be fit before predicting")
         
         x = np.array(x, dtype = np.float64)
+        if x.size == 0:
+            return np.array([])
         if x.ndim == 1:
             if x.shape[0] == self.weights.shape[0]:
                 x = x.reshape(1, -1)

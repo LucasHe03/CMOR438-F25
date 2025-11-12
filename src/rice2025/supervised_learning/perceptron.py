@@ -10,9 +10,9 @@ class Perceptron:
     Initializes the Perceptron class.
     Inputs:
         - learning_rate: The learning rate (default = .01)
-        - n_iter: The number of passes over the training dataset (default = 50)
+        - n_iter: The number of passes over the training dataset (default = 1000)
     """
-    def __init__(self, lr = 0.01, n_iter = 50):
+    def __init__(self, lr = 0.01, n_iter = 1000):
         self.lr = lr
         self.n_iter = n_iter
         self.weights = None
@@ -66,6 +66,8 @@ class Perceptron:
             raise ValueError("model must be fit before predicting")
         
         x = np.array(x, dtype=np.float64)
+        if x.size == 0:
+            return np.array([])
         if x.ndim == 1 and self.weights.shape[0] == 1:
             x = x.reshape(-1, 1)
         elif x.ndim == 1:
