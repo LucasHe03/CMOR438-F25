@@ -8,7 +8,7 @@ Test __init__ function
 def test_init_default():
     model = p.Perceptron()
     assert model.lr == 0.01
-    assert model.n_iter == 50
+    assert model.n_iter == 1000
     assert model.weights is None
     assert model.bias is None
 
