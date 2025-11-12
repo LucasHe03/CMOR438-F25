@@ -12,7 +12,7 @@ class Perceptron:
         - learning_rate: The learning rate (default = .01)
         - n_iter: The number of passes over the training dataset (default = 50)
     """
-    def __init__(self, lr = 0.01, n_iter=50):
+    def __init__(self, lr = 0.01, n_iter = 50):
         self.lr = lr
         self.n_iter = n_iter
         self.weights = None
@@ -25,8 +25,8 @@ class Perceptron:
         - y: the training labels
     """
     def fit(self, x, y):
-        x = np.array(x, dtype=np.float64)
-        y = np.array(y, dtype=np.int_)
+        x = np.array(x, dtype = np.float64)
+        y = np.array(y, dtype = np.int_)
 
         if x.ndim == 1:
             x = x.reshape(-1, 1)
