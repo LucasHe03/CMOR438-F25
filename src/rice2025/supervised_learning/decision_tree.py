@@ -42,7 +42,7 @@ class DecisionTree:
             - x: the training data
             - y: the training target values
         """
-        x = np.array(x, dtype=np.float64)
+        x = np.array(x, dtype = np.float64)
         y = np.array(y)
 
         if len(x) != len(y):
@@ -57,7 +57,7 @@ class DecisionTree:
     """
     Private helper to recursively build the tree.
     """
-    def _build_tree(self, x, y, depth=0):
+    def _build_tree(self, x, y, depth = 0):
         n_samples, n_features = x.shape
         n_labels = len(np.unique(y))
 
@@ -67,7 +67,7 @@ class DecisionTree:
             return _Node(value=leaf_value)
 
         # find the best split
-        feat_idxs = np.random.choice(n_features, n_features, replace=False)
+        feat_idxs = np.random.choice(n_features, n_features, replace = False)
         best_split = self._best_split(x, y, n_features)
         if best_split is None or best_split['threshold'] is None or best_split['gain'] <= 0:
             leaf_value = self._leaf_value(y)
@@ -159,7 +159,7 @@ class DecisionTree:
         if self.root is None:
             raise ValueError("model must be fit before predicting")
 
-        x = np.array(x, dtype=np.float64)
+        x = np.array(x, dtype = np.float64)
         if x.size == 0:
             return np.array([])
         if x.ndim == 1:
