@@ -8,12 +8,14 @@ __all__ = ['DecisionTree']
 Helper class to represent a node in the decision tree.
 """
 class _Node:
-    def __init__(self, feature_index = None, threshold = None, left = None, right = None, *, value = None):
+    def __init__(self, feature_index=None, threshold=None,
+                 left=None, right=None, *, value=None, num_samples=None):
         self.feature_index = feature_index
         self.threshold = threshold
         self.left = left
         self.right = right
         self.value = value
+        self.num_samples = num_samples
 
     def is_leaf_node(self):
         return self.value is not None
@@ -29,6 +31,12 @@ class DecisionTree:
         - max_depth: The maximum depth of the tree (default = 100).
     """
     def __init__(self, min_samples_split = 2, max_depth = 100):
+        if not isinstance(min_samples_split, int) or min_samples_split < 2:
+            raise ValueError("min_samples_split must be an integer >= 2")
+
+        if not isinstance(max_depth, int) or max_depth < 0:
+            raise ValueError("max_depth must be an integer >= 0")
+        
         self.min_samples_split = min_samples_split
         self.max_depth = max_depth
         self.root = None
@@ -69,15 +77,21 @@ class DecisionTree:
         # find the best split
         feat_idxs = np.random.choice(n_features, n_features, replace = False)
         best_split = self._best_split(x, y, n_features)
-        if best_split is None or best_split['threshold'] is None or best_split['gain'] <= 0:
+        if best_split is None or best_split['threshold'] is None:
             leaf_value = self._leaf_value(y)
-            return _Node(value = leaf_value)
+            return _Node(value=leaf_value, num_samples=len(y))
         
         # recurse on children
         left_idxs, right_idxs = self._split(x[:, best_split['feature_index']], best_split['threshold'])
-        left = self._build_tree(x[left_idxs, :], y[left_idxs], depth + 1)
+        left = self._build_tree(x[left_idxs, :], y[left_idxs], depth +  1)
         right = self._build_tree(x[right_idxs, :], y[right_idxs], depth + 1)
-        return _Node(best_split['feature_index'], best_split['threshold'], left, right)
+        return _Node(
+            best_split['feature_index'],
+            best_split['threshold'],
+            left,
+            right,
+            num_samples=len(y)
+        )
 
     """
     Private helper to find the best split for a node.
@@ -88,10 +102,10 @@ class DecisionTree:
 
         for feat_idx in range(n_features):
             x_column = x[:, feat_idx]
-            unique_values = np.unique(x_column)
-            if len(unique_values) == 1:
-                continue
-            for threshold in unique_values:
+            sorted_vals = np.unique(x_column)
+            thresholds = (sorted_vals[:-1] + sorted_vals[1:]) / 2
+
+            for threshold in thresholds:
                 gain = self._information_gain(y, x_column, threshold)
                 if gain > best_gain:
                     best_gain = gain
