@@ -31,6 +31,10 @@ class LinearRegression:
             raise ValueError("x and y must have equal lengths")
         if x.size == 0:
             raise ValueError("x and y must be non-empty")
+        
+        # mask zero variance
+        self._nonconstant_mask = np.std(x, axis=0) > 1e-12
+        x = x[:, self._nonconstant_mask]
 
         n_samples, n_features = x.shape
 
@@ -56,10 +60,20 @@ class LinearRegression:
         x = np.array(x, dtype = np.float64)
         if x.size == 0:
             return np.array([])
-        if x.ndim == 1 and self.weights.shape[0] == 1:
-            x = x.reshape(-1, 1)
+        if x.ndim == 0:
+            x = x.reshape(1, 1)
         elif x.ndim == 1:
-            x = x.reshape(1, -1) 
+            if self.weights.shape[0] == 1:
+                x = x.reshape(-1, 1)
+            else:
+                x = x.reshape(1, -1)
+
+        expected_features = self._nonconstant_mask.shape[0]
+        if x.shape[1] != expected_features:
+            raise ValueError("Number of features of the model must match the input")
+        
+        # apply mask
+        x = x[:, self._nonconstant_mask]
         
         # predict
         return np.dot(x, self.weights) + self.bias
