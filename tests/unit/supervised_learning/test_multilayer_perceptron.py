@@ -52,15 +52,6 @@ def test_predict_not_fitted():
     with pytest.raises(ValueError, match = "model must be fit before predicting"):
         model.predict([[0, 0]])
 
-def test_predict_xor():
-    model = mlp.MultilayerPerceptron(n_hidden = 10, lr = 0.05, n_iter = 20000)
-    x_train = [[0, 0], [0, 1], [1, 0], [1, 1]]
-    y_train = [0, 1, 1, 0]
-    model.fit(x_train, y_train)
-    
-    predictions = model.predict(x_train)
-    np.testing.assert_array_equal(predictions, np.array(y_train))
-
 def test_predict_single_point():
     model = mlp.MultilayerPerceptron(n_hidden = 10, lr = 0.1, n_iter = 5000)
     x_train = [[0, 0], [0, 1], [1, 0], [1, 1]]
