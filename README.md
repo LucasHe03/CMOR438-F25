@@ -19,6 +19,11 @@ Implemented algorithms include:
 - Random Forests
 - Ensemble Methods
 
+- k-means Clustering
+- DBScan
+- Community detection
+- PCA
+
 ---
 
 ## Installation

@@ -10,5 +10,7 @@ The unsupervised learning module provides implementations of common unsupervised
 
 ## Included Algorithms
 
-- Clustering
+- k-means Clustering
 - DBScan
+- Community detection
+- PCA
