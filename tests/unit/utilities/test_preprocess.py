@@ -107,58 +107,8 @@ def test_normalize_2d_rep_col():
 """
 Test train_test_split function.
 """
-def test_train_test_split_empty():
-    train, test = prep.train_test_split(empty)
-    assert train.size == 0 and test.size == 0
-
-def test_train_test_split_1d():
-    data = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
-    train, test = prep.train_test_split(data)
-    assert train.size == 8 and test.size == 2
-    split_helper(test, train)
-
-def test_train_test_split_1d2():
-    data = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11])
-    train, test = prep.train_test_split(data)
-    assert train.size == 9 and test.size == 3
-    split_helper(test, train)
-
-def test_train_test_split_2d():
-    data = np.array([[0, 1, 2, 3],
-                     [4, 5, 6, 7], 
-                     [8, 9, 10, 11]])
-    train, test = prep.train_test_split(data)
-    assert train.size == 8 and test.size == 4
-    split_helper(test, train)
-    split_2d_helper(data, train, test)
-
-def test_train_test_split_2d2():
-    data = np.array([[0, 1], [2, 3],
-                    [4, 5], [6, 7], 
-                    [8, 9], [10, 11],
-                    [12, 13], [14, 15]])
-    train, test = prep.train_test_split(data)
-    assert train.size == 12 and test.size == 4
-    split_helper(test, train)
-    split_2d_helper(data, train, test)
-
-def test_train_test_split_custom_size():
-    data = np.arange(20)
-    train, test = prep.train_test_split(data, test_size=0.5)
-    assert train.size == 10
-    assert test.size == 10
-    split_helper(test, train)
-
-def test_train_test_split_size_one():
-    data = np.arange(10)
-    train, test = prep.train_test_split(data, test_size=0.1)
-    assert train.size == 9
-    assert test.size == 1
-    split_helper(test, train)
-
-def test_train_test_split_invalid_size():
-    with pytest.raises(ValueError):
-        prep.train_test_split(one_d, test_size=1.5)
+empty_X = np.array([]).reshape(0, 1)
+empty_y = np.array([])
 
 def split_helper(test, train):
     assert len(np.unique(train)) == train.size
@@ -169,3 +119,53 @@ def split_2d_helper(original, train, test):
     assert train.shape[1] == original.shape[1]
     assert test.shape[1] == original.shape[1]
     assert train.shape[0] + test.shape[0] == original.shape[0]
+
+# ---------- TESTS ----------
+
+def test_train_test_split_empty():
+    X_train, X_test, y_train, y_test = prep.train_test_split(empty_X, empty_y)
+    assert X_train.size == 0 and X_test.size == 0
+    assert y_train.size == 0 and y_test.size == 0
+
+def test_train_test_split_1d():
+    X = np.arange(10).reshape(-1, 1)
+    y = np.arange(10)
+    X_train, X_test, y_train, y_test = prep.train_test_split(X, y, test_size=0.2)
+    assert X_train.shape[0] == 8 and X_test.shape[0] == 2
+    assert y_train.shape[0] == 8 and y_test.shape[0] == 2
+    split_helper(y_test, y_train)
+
+def test_train_test_split_2d():
+    X = np.array([[0, 1, 2, 3],
+                  [4, 5, 6, 7], 
+                  [8, 9, 10, 11]])
+    y = np.array([0, 1, 2])
+    X_train, X_test, y_train, y_test = prep.train_test_split(X, y, test_size=0.33)
+    split_2d_helper(X, X_train, X_test)
+    split_helper(y_test, y_train)
+
+def test_train_test_split_custom_size():
+    X = np.arange(20).reshape(-1, 1)
+    y = np.arange(20)
+    X_train, X_test, y_train, y_test = prep.train_test_split(X, y, test_size=0.5)
+    assert X_train.shape[0] == 10
+    assert X_test.shape[0] == 10
+    assert y_train.shape[0] == 10
+    assert y_test.shape[0] == 10
+    split_helper(y_test, y_train)
+
+def test_train_test_split_size_one():
+    X = np.arange(10).reshape(-1, 1)
+    y = np.arange(10)
+    X_train, X_test, y_train, y_test = prep.train_test_split(X, y, test_size=0.1)
+    assert X_train.shape[0] == 9
+    assert X_test.shape[0] == 1
+    assert y_train.shape[0] == 9
+    assert y_test.shape[0] == 1
+    split_helper(y_test, y_train)
+
+def test_train_test_split_invalid_size():
+    X = np.arange(10).reshape(-1, 1)
+    y = np.arange(10)
+    with pytest.raises(ValueError):
+        prep.train_test_split(X, y, test_size=1.5)
