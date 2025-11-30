@@ -5,8 +5,7 @@ __all__ = ['CommunityDetection']
 
 class CommunityDetection:
     """
-    Community detection implementation consistent with project test suite.
-    Communities are the connected components of the graph.
+    Community Detection Algorithm.
     """
 
     def __init__(self, max_iter=100):
