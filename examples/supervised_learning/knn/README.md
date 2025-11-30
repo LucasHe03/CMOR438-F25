@@ -10,8 +10,8 @@ It does not learn a model during training. Rather, it makes predictions by findi
 2. Compute the distance between the new "predict" point and all training points.  
 3. Select the **k nearest neighbors**.  
 4. Predict using:  
-   - **Classification:** majority vote  
-   - **Regression:** average of the neighbors  
+   - Classification: majority vote  
+   - Regression: average of the neighbors  
 
 ## Strengths
 - Very easy to understand and implement  
