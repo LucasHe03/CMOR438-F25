@@ -5,7 +5,7 @@ __all__ = ['CommunityDetection']
 
 class CommunityDetection:
     """
-    Community Detection Algorithm.
+    Community Detection Algorithm using label propagation.
     """
 
     def __init__(self, max_iter=100):
@@ -17,7 +17,7 @@ class CommunityDetection:
 
     def fit(self, x):
         """
-        Fits the model by detecting connected components.
+        Fits the model by detecting communities via label propagation.
 
         Args:
             x (array-like): adjacency matrix
@@ -25,8 +25,7 @@ class CommunityDetection:
         Returns:
             self
         """
-
-        # handle of empty input
+        # handle empty input
         if isinstance(x, list) and len(x) == 0:
             self.labels_ = np.array([])
             return self
@@ -48,32 +47,25 @@ class CommunityDetection:
             self.labels_ = np.array([])
             return self
 
-        # If no edges, every node is own community
+        # if no edges, every node is own community
         if np.sum(adj_matrix) == 0:
             self.labels_ = np.arange(n)
             return self
 
-        # Connected components
-        visited = np.zeros(n, dtype=bool)
-        labels = np.full(n, -1)
-        current_label = 0
+        labels = np.arange(n)
 
-        for i in range(n):
-            if not visited[i]:
-                stack = [i]
-                visited[i] = True
-                labels[i] = current_label
-
-                while stack:
-                    node = stack.pop()
-                    neighbors = np.where(adj_matrix[node] > 0)[0]
-                    for nb in neighbors:
-                        if not visited[nb]:
-                            visited[nb] = True
-                            labels[nb] = current_label
-                            stack.append(nb)
-
-                current_label += 1
+        # Iterative label propagation
+        for _ in range(self.max_iter):
+            # shuffle node order each iteration for randomness
+            nodes = np.arange(n)
+            np.random.shuffle(nodes)
+            for i in nodes:
+                neighbors = np.where(adj_matrix[i] > 0)[0]
+                if len(neighbors) == 0:
+                    continue
+                # assign node i the most common label among neighbors
+                neighbor_labels = labels[neighbors]
+                labels[i] = np.bincount(neighbor_labels).argmax()
 
         self.labels_ = labels
         return self

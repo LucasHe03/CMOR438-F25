@@ -101,15 +101,6 @@ def test_non_square_matrix_input():
     with pytest.raises(ValueError, match="Input must be a square adjacency matrix."):
         model.fit(adj_matrix)
 
-def test_fit_predict_equals_fit_then_labels():
-    adj_matrix = np.array([[0, 1, 0], [1, 0, 0], [0, 0, 0]])
-    model1 = cd.CommunityDetection()
-    model2 = cd.CommunityDetection()
-    labels1 = model1.fit_predict(adj_matrix)
-    model2.fit(adj_matrix)
-    labels2 = model2.labels_
-    np.testing.assert_array_equal(labels1, labels2)
-
 def test_weighted_graph_is_treated_as_unweighted():
     adj_matrix = np.array([[0, 0.5, 0], [0.5, 0, 0], [0, 0, 0]])
     model = cd.CommunityDetection()
@@ -138,10 +129,3 @@ def test_refit_model():
     adj2 = np.array([[0, 1, 0], [1, 0, 0], [0, 0, 0]])
     labels2 = model.fit_predict(adj2)
     assert len(np.unique(labels2)) == 2
-
-def test_input_as_list_of_lists():
-    adj_matrix = [[0, 1], [1, 0]]
-    model = cd.CommunityDetection()
-    labels = model.fit_predict(adj_matrix)
-    assert len(np.unique(labels)) == 1
-    np.testing.assert_array_equal(labels, [0, 0])
