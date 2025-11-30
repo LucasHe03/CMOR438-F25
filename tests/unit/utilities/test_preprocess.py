@@ -169,3 +169,56 @@ def test_train_test_split_invalid_size():
     y = np.arange(10)
     with pytest.raises(ValueError):
         prep.train_test_split(X, y, test_size=1.5)
+
+"""
+Tests for fit_transform_split function.
+"""
+
+def test_fit_transform_split_basic():
+    X_train = np.array([[0., 1.], [2., 3.]])
+    X_test = np.array([[1., 2.]])
+    X_train_s, X_test_s = prep.fit_transform_split(X_train, X_test)
+
+    np.testing.assert_allclose(X_train_s, np.array([[-1., -1.], [1., 1.]]), 1e-8)
+    np.testing.assert_allclose(X_test_s, np.array([[0., 0.]]), 1e-8)
+
+
+def test_fit_transform_split_zero_variance_column():
+    X_train = np.array([[5., 2.], [5., 4.]])
+    X_test = np.array([[5., 3.]])
+    X_train_s, X_test_s = prep.fit_transform_split(X_train, X_test)
+
+    np.testing.assert_allclose(X_train_s[:, 0], np.array([0., 0.]), 1e-8)
+    np.testing.assert_allclose(X_test_s[:, 0], np.array([0.]), 1e-8)
+
+
+def test_fit_transform_split_uses_train_stats_not_test():
+    X_train = np.array([[0., 0.], [10., 10.]])
+    X_test  = np.array([[100., 100.]])
+    X_train_s, X_test_s = prep.fit_transform_split(X_train, X_test)
+
+    assert np.isclose(X_test_s[0, 0], 19.0, atol=1e-8)
+    assert np.isclose(X_test_s[0, 1], 19.0, atol=1e-8)
+
+
+def test_fit_transform_split_shapes_preserved():
+    X_train = np.random.randn(7, 4)
+    X_test = np.random.randn(3, 4)
+    X_train_s, X_test_s = prep.fit_transform_split(X_train, X_test)
+
+    assert X_train_s.shape == (7, 4)
+    assert X_test_s.shape == (3, 4)
+
+
+def test_fit_transform_split_single_feature():
+    X_train = np.array([[1.], [3.], [5.]])
+    X_test = np.array([[4.]])
+    X_train_s, X_test_s = prep.fit_transform_split(X_train, X_test)
+
+    mean = 3.
+    std =  np.std([1.,3.,5.])
+    exp_train = (X_train.flatten() - mean) / std
+    exp_test = (X_test.flatten() - mean) / std
+
+    np.testing.assert_allclose(X_train_s.flatten(), exp_train, 1e-8)
+    np.testing.assert_allclose(X_test_s.flatten(), exp_test, 1e-8)

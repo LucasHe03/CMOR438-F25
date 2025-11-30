@@ -95,3 +95,28 @@ def train_test_split(X, y, test_size=0.25, random_seed=None):
     y_train, y_test = y[train_idx], y[test_idx]
     
     return X_train, X_test, y_train, y_test
+
+import numpy as np
+
+def fit_transform_split(X_train, X_test):
+    """
+    Scales X_train and X_test using training-set statistics only.
+    
+    Returns:
+        X_train_scaled, X_test_scaled
+    """
+
+    X_train = np.asarray(X_train, dtype=np.float64)
+    X_test = np.asarray(X_test, dtype=np.float64)
+
+    # compute training statistics
+    mean = X_train.mean(axis=0)
+    std = X_train.std(axis=0)
+
+    std[std == 0] = 1e-12
+
+    # scale
+    X_train_scaled = (X_train - mean) / std
+    X_test_scaled = (X_test - mean) / std
+
+    return X_train_scaled, X_test_scaled
