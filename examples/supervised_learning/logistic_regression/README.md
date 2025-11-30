@@ -5,8 +5,8 @@
 Unlike linear regression, which predicts continuous values, logistic regression predicts probabilities of class membership and outputs class labels.
 
 ## How It Works
-1. Compute a weighted sum of the input features: $ z = \beta_0 + \beta_1 x_1 + ... + \beta_n x_n $  
-2. Apply the sigmoid function to obtain a probability $ P(y=1 \mid X) $  
+1. Compute a weighted sum of the input features: $z = \beta_0 + \beta_1 x_1 + ... + \beta_n x_n$  
+2. Apply the sigmoid function to obtain a probability $P(y=1 \mid X)$  
 3. Convert probability to a class label using a preset threshold
 
 ## Strengths
