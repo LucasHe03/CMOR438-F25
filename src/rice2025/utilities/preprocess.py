@@ -1,6 +1,6 @@
 import numpy as np
 
-__all__ = ['scale', 'normalize', 'train_test_split']
+__all__ = ['scale', 'normalize', 'train_test_split', 'fit_transform_split']
 
 def scale(data):
     """
