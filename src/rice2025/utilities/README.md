@@ -1,12 +1,12 @@
-# Unsupervised Learning Library
+# Utilities Library
 
-This directory contains the implementation of the unsupervised learning algorithms in the **rice2025** Python package.
+This directory contains the implementation of the broad utility functions in the **rice2025** Python package.
 
 --- 
 
 ## Overview
 
-The supervised learning module provides implementations of common unsupervised learning algorithms and supporting utilities.
+The utilities module provides implementations of common utilities used in machine learning algorithms.
 
 ## Subpackage Structure
 ```
