@@ -13,9 +13,9 @@ class KMeansClustering:
         """
         Initializes the KMeansClustering class.
 
-        Args:
-            k (int): The number of clusters to form.
-            max_iter (int): The maximum number of iterations for the algorithm to run.
+        Inputs:
+            k: The number of clusters to form.
+            max_iter: The maximum number of iterations for the algorithm to run.
         """
         if not isinstance(k, int) or k <= 0:
             raise ValueError("k must be a positive integer")
@@ -50,8 +50,8 @@ class KMeansClustering:
         """
         Computes K-Means clustering.
 
-        Args:
-            x (array-like): The training data of shape (n_samples, n_features).
+        Inputs:
+            x: The training data of shape (n_samples, n_features).
         """
         x = np.array(x, dtype=np.float64)
         if x.ndim == 1:
@@ -60,18 +60,18 @@ class KMeansClustering:
         if len(x) < self.k:
             raise ValueError("Number of samples must be greater than or equal to k")
 
-        # Initialize centroids by randomly selecting k points from the data
+        # initialize centroids by randomly selecting k points
         random_indices = np.random.choice(len(x), self.k, replace=False)
         self.centroids = x[random_indices]
 
         for _ in range(self.max_iter):
-            # Assign points to the closest centroid
+            # assign points to closest centroid
             self.labels = self._assign_clusters(x)
 
-            # Update centroids
+            # update centroids
             new_centroids = self._update_centroids(x, self.labels)
 
-            # Check for convergence
+            # check for convergence
             if np.allclose(self.centroids, new_centroids):
                 break
 
@@ -83,11 +83,8 @@ class KMeansClustering:
         """
         Predicts the closest cluster for each sample in x.
 
-        Args:
-            x (array-like): New data to predict of shape (n_samples, n_features).
-
-        Returns:
-            np.ndarray: The predicted cluster labels.
+        Inputs:
+            x: New data to predict of shape (n_samples, n_features).
         """
         if self.centroids is None:
             raise ValueError("Model must be fit before predicting")

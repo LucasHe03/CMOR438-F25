@@ -7,19 +7,15 @@ __all__ = ['DBSCAN']
 class DBSCAN:
     """
     Implements the DBSCAN (Density-Based Spatial Clustering of Applications with Noise) algorithm.
-
-    DBSCAN groups together points that are closely packed together, marking as
-    outliers points that lie alone in low-density regions.
     """
 
     def __init__(self, eps=0.5, min_samples=5):
         """
         Initializes the DBSCAN class.
-
-        Args:
-            eps (float): The maximum distance between two samples for one to be
+        Inputs:
+            eps: The maximum distance between two samples for one to be
                          considered as in the neighborhood of the other.
-            min_samples (int): The number of samples in a neighborhood for a
+            min_samples: The number of samples in a neighborhood for a
                                point to be considered as a core point.
         """
         if not isinstance(eps, (int, float)) or eps <= 0:
@@ -46,9 +42,9 @@ class DBSCAN:
         while i < len(neighbors):
             neighbor_idx = neighbors[i]
 
-            if labels[neighbor_idx] == -1:  # If point was labeled as noise
+            if labels[neighbor_idx] == -1:  # if point was labeled as noise
                 labels[neighbor_idx] = cluster_id
-            elif labels[neighbor_idx] == 0:  # If point is unvisited
+            elif labels[neighbor_idx] == 0:  # if point is unvisited
                 labels[neighbor_idx] = cluster_id
                 new_neighbors = self._region_query(x, neighbor_idx)
                 if len(new_neighbors) >= self.min_samples:
@@ -59,11 +55,8 @@ class DBSCAN:
         """
         Performs DBSCAN clustering.
 
-        Args:
-            x (array-like): The training data of shape (n_samples, n_features).
-
-        Returns:
-            self: The fitted instance of the model.
+        Inputs:
+            x: The training data of shape (n_samples, n_features).
         """
         x = np.array(x, dtype=np.float64)
         if x.ndim == 1:
@@ -79,13 +72,13 @@ class DBSCAN:
         cluster_id = 0
 
         for i in range(n_samples):
-            if self.labels_[i] != 0:  # If already visited
+            if self.labels_[i] != 0:  # if already visited
                 continue
 
             neighbors = self._region_query(x, i)
 
             if len(neighbors) < self.min_samples:
-                self.labels_[i] = -1 # Mark as noise
+                self.labels_[i] = -1 # mark as noise
             else:
                 cluster_id += 1
                 self._expand_cluster(x, self.labels_, i, neighbors, cluster_id)
@@ -98,11 +91,8 @@ class DBSCAN:
         """
         Fits the model and returns the cluster labels.
 
-        Args:
-            x (array-like): The training data of shape (n_samples, n_features).
-
-        Returns:
-            np.ndarray: The predicted cluster labels.
+        Inputs:
+            x: The training data of shape (n_samples, n_features).
         """
         self.fit(x)
         return self.labels_

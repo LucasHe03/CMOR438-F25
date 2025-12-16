@@ -39,7 +39,7 @@ class Perceptron:
 
         n_samples, n_features = x.shape
 
-        # Initialize weights and bias
+        # initialize weights and bias
         self.weights = np.zeros(n_features)
         self.bias = 0.0
 
@@ -73,8 +73,8 @@ class Perceptron:
         elif x.ndim == 1:
             x = x.reshape(1, -1)
                 
-        # Calculate net input
+        # calculate net input
         linear_output = np.dot(x, self.weights) + self.bias
-        # Predict
+        # predict
         y_predicted = np.where(linear_output >= 0.0, 1, -1)
         return y_predicted

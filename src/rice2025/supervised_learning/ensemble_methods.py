@@ -3,18 +3,13 @@ from ..utilities import postprocess as postp
 
 class EnsembleVotingClassifier:
     """
-    Ensemble classifier that combines three different models
-    using hard or soft voting.
+    Ensemble classifier that combines three different models.
 
     Parameters
     ----------
-    model1, model2, model3 : objects that implement:
+    model1, model2, model3 : models that implement:
         - fit(X, y)
         - predict(X)
-
-    voting : str
-        'hard'  -> majority vote
-        'soft'  -> average predicted probabilities
     """
 
     def __init__(self, model1, model2, model3):

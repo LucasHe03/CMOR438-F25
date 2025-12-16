@@ -54,16 +54,16 @@ class CommunityDetection:
 
         labels = np.arange(n)
 
-        # Iterative label propagation
+        # iterative label propagation
         for _ in range(self.max_iter):
-            # shuffle node order each iteration for randomness
+            # shuffle node order
             nodes = np.arange(n)
             np.random.shuffle(nodes)
             for i in nodes:
                 neighbors = np.where(adj_matrix[i] > 0)[0]
                 if len(neighbors) == 0:
                     continue
-                # assign node i the most common label among neighbors
+                # assign node i the most common label
                 neighbor_labels = labels[neighbors]
                 labels[i] = np.bincount(neighbor_labels).argmax()
 

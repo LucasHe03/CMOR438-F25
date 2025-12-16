@@ -42,7 +42,7 @@ class RandomForest:
         n_samples = x.shape[0]
 
         for _ in range(self.n_estimators):
-            # Bootstrap sampling
+            # bootstrap sampling
             idxs = np.random.choice(n_samples, n_samples, replace=True)
             x_sample, y_sample = x[idxs], y[idxs]
 
@@ -68,11 +68,10 @@ class RandomForest:
         if x.ndim == 1:
             x = x.reshape(1, -1)
 
-        # Get predictions from all trees
+        # get predictions from all trees
         tree_preds = np.array([tree.predict(x) for tree in self.trees])
 
-        # For each sample, aggregate the predictions from all trees
-        # Transpose so that rows are samples and columns are tree predictions
+        # aggregate the predictions from all trees
         predictions = []
         for sample_preds in tree_preds.T:
             if self._is_classifier:

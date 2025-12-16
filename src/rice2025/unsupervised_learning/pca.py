@@ -12,8 +12,8 @@ class PCA:
         """
         Initializes the PCA class.
 
-        Args:
-            n_components (int): The number of principal components to keep.
+        Inputs:
+            n_components: The number of principal components to keep.
         """
         if not isinstance(n_components, int) or n_components <= 0:
             raise ValueError("n_components must be a positive integer")
@@ -26,11 +26,8 @@ class PCA:
         """
         Fit the model with X by computing the principal components.
 
-        Args:
-            x (array-like): Training data, shape (n_samples, n_features).
-
-        Returns:
-            self: The fitted instance of the model.
+        Inputs:
+            : Training data, shape (n_samples, n_features).
         """
         if len(x) == 0:
             raise ValueError("Input data x cannot be empty")
@@ -67,11 +64,8 @@ class PCA:
         """
         Apply dimensionality reduction to X.
 
-        Args:
-            x (array-like): Data to transform, shape (n_samples, n_features).
-
-        Returns:
-            np.ndarray: Transformed data, shape (n_samples, n_components).
+        Inputs:
+            x: Data to transform, shape (n_samples, n_features).
         """
         if self.components_ is None:
             raise ValueError("PCA model must be fit before transforming data.")
@@ -89,9 +83,6 @@ class PCA:
     def fit_transform(self, x):
         """
         Fit the model with X and apply the dimensionality reduction on X.
-
-        Returns:
-            np.ndarray: Transformed data, shape (n_samples, n_components).
         """
         self.fit(x)
         return self.transform(x)

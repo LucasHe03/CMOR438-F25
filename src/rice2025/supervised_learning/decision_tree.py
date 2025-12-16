@@ -137,7 +137,6 @@ class DecisionTree:
 
         child_impurity = (n_l / n) * e_l + (n_r / n) * e_r
 
-        # information gain is parent impurity - weighted child impurity
         return parent_impurity - child_impurity
 
     """
